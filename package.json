@@ -1,8 +1,9 @@
 {
-  "name": "openai-pr-reviewer",
+  "name": "pullhawk",
   "version": "0.0.0",
   "private": true,
-  "description": "OpenAI-based PR Reviewer and Summarizer.",
+  "type": "module",
+  "description": "Privacy-first AI-powered PR reviewer and summarizer for private LLM environments.",
   "main": "lib/main.js",
   "scripts": {
     "build": "cp node_modules/@dqbd/tiktoken/tiktoken_bg.wasm dist/tiktoken_bg.wasm && tsc",
@@ -11,22 +12,28 @@
     "format": "prettier --write '**/*.ts'",
     "format-check": "prettier --check '**/*.ts'",
     "lint": "eslint src/**/*.ts",
-    "test": "jest",
+    "test": "npm run build && jest",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fluxninja/openai-pr-reviewer.git"
+    "url": "git+https://github.com/conmob-ai/pullHawk.git"
   },
   "keywords": [
     "actions",
-    "node",
-    "setup"
+    "ai",
+    "code-review",
+    "private-llm",
+    "privacy",
+    "security",
+    "github-action",
+    "pull-request",
+    "summarizer"
   ],
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.10.0",
-    "@actions/github": "^5.1.1",
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0",
     "@dqbd/tiktoken": "^1.0.7",
     "@octokit/action": "^6.0.4",
     "@octokit/plugin-retry": "^4.1.3",
