@@ -46,8 +46,11 @@ GitHub → pullHawk Action → Your Private LLM → Secure Reviews
 
 Add the workflow file to your repository at `.github/workflows/pullhawk.yml`:
 
+
+Below is an example of a workflow file that uses pullHawk in a STRIVE project environment.
+
 ```yaml
-name: pullHawk Code Review
+name: Code Review
 
 permissions:
   contents: read
@@ -69,30 +72,33 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - uses: your-org/pullhawk@latest
+      - uses: coderabbitai/ai-pr-reviewer@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Private LLM Configuration
-          LLM_API_URL: ${{ secrets.LLM_API_URL }}
-          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}  # Optional, for authenticated endpoints
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          STRIVE_PROJECT_NAME: ${{ secrets.STRIVE_PROJECT_NAME }}
         with:
           debug: false
           review_simple_changes: false
           review_comment_lgtm: false
-          # Model configuration for your private LLM
-          light_model: "codellama:7b"      # For summaries
-          heavy_model: "codellama:34b"     # For detailed reviews
+          openai_light_model: GPT-4o Mini
+          openai_heavy_model: Claude 3.7 Sonnet
+          openai_base_url: https://aie-striveyard.devops.t-systems.net/api/chat-proxy/v2/projects/${{ env.STRIVE_PROJECT_NAME }}/v2/
+          bot_icon: '<img src="https://avatars.githubusercontent.com/u/1821916?v=4&size=64" alt="Image description" width="20" height="20">'
 ```
 
 ## 🔧 Environment Variables
 
 ### Required
-- `GITHUB_TOKEN`: GitHub Actions token for PR comments
-- `LLM_API_URL`: Your private LLM endpoint (e.g., `http://your-ollama-server:11434`)
+- `GITHUB_TOKEN`: GitHub Actions token for PR comments (automatically available)
+- `OPENAI_API_KEY`: Your AI service API key for the T-Systems proxy
+- `STRIVE_PROJECT_NAME`: Your project name in the T-Systems AI gateway (e.g., "PROCAST")
 
-### Optional
-- `LLM_API_KEY`: Authentication key if your LLM endpoint requires it
-- `LLM_API_ORG`: Organization identifier for multi-tenant setups
+### Configuration Options
+- `openai_base_url`: Custom AI proxy endpoint (e.g., T-Systems AI Gateway)
+- `openai_light_model`: Lightweight model for summaries (e.g., "GPT-4o Mini")
+- `openai_heavy_model`: Advanced model for detailed reviews (e.g., "Claude 3.7 Sonnet")
+- `bot_icon`: Custom icon for the review bot
 
 ## 🤖 Supported Private LLM Providers
 
