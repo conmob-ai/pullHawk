@@ -1,7 +1,7 @@
 import {getInput, info, warning} from '@actions/core'
 // eslint-disable-next-line camelcase
 import {context as github_context} from '@actions/github'
-import {octokit} from './octokit.js'
+import {octokit} from './octokit'
 
 // eslint-disable-next-line camelcase
 const context = github_context

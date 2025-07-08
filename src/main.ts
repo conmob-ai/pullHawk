@@ -5,11 +5,11 @@ import {
   setFailed,
   warning
 } from '@actions/core'
-import {Bot} from './bot.js'
-import {OpenAIOptions, Options} from './options.js'
-import {Prompts} from './prompts.js'
-import {codeReview} from './review.js'
-import {handleReviewComment} from './review-comment.js'
+import {Bot} from './bot'
+import {OpenAIOptions, Options} from './options'
+import {Prompts} from './prompts'
+import {codeReview} from './review'
+import {handleReviewComment} from './review-comment'
 
 async function run(): Promise<void> {
   const options: Options = new Options(
@@ -99,4 +99,4 @@ process
     warning(`Uncaught Exception thrown: ${e}, backtrace: ${e.stack}`)
   })
 
-await run()
+run()

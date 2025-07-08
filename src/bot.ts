@@ -1,4 +1,4 @@
-import './fetch-polyfill.js'
+import './fetch-polyfill'
 
 import {info, setFailed, warning} from '@actions/core'
 import {
@@ -8,7 +8,7 @@ import {
   SendMessageOptions
 } from 'chatgpt'
 import pRetry from 'p-retry'
-import {OpenAIOptions, Options} from './options.js'
+import {OpenAIOptions, Options} from './options'
 
 // define type to save parentMessageId and conversationId
 export interface Ids {
