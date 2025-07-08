@@ -111,6 +111,9 @@ pullHawk works with any OpenAI-compatible API, including:
 - **[LM Studio](https://lmstudio.ai/)** - Desktop LLM application
 - **Custom implementations** - Any OpenAI-compatible endpoint
 
+in case of using public LLM providers, the use of openrouter.ai is recommended.
+
+
 ## 📝 Model Recommendations
 
 For optimal performance, we recommend using different models for different tasks:
