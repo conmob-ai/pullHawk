@@ -2,6 +2,7 @@
   "name": "pullhawk",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "description": "Privacy-first AI-powered PR reviewer and summarizer for private LLM environments.",
   "main": "lib/main.js",
   "scripts": {
@@ -11,7 +12,7 @@
     "format": "prettier --write '**/*.ts'",
     "format-check": "prettier --check '**/*.ts'",
     "lint": "eslint src/**/*.ts",
-    "test": "jest",
+    "test": "npm run build && jest",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
   "repository": {
