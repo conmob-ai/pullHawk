@@ -7,7 +7,7 @@
 pullHawk is an AI-powered code reviewer and summarizer for GitHub pull requests, designed specifically for teams who need **private, secure, and self-hosted LLM solutions**. Born from the foundation of [CodeRabbit](http://coderabbit.ai), pullHawk addresses the critical need for organizations that cannot send their proprietary code to external AI services.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub](https://img.shields.io/github/last-commit/coderabbitai/ai-pr-reviewer/main?style=flat-square)](https://github.com/coderabbitai/ai-pr-reviewer/commits/main)
+[![GitHub](https://img.shields.io/github/last-commit/conmob-ai/pullhawk/main?style=flat-square)](https://github.com/conmob-ai/pullhawk/commits/main)
 
 ## 🎯 Why pullHawk?
 
