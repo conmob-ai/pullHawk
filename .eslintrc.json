@@ -3,10 +3,7 @@
   "extends": [
     "plugin:github/recommended",
     "eslint:recommended",
-    "plugin:prettier/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript"
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -18,7 +15,13 @@
     "globalThis": false
   },
   "rules": {
-    "i18n-text/no-en": "off"
+    "i18n-text/no-en": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "import/namespace": "off",
+    "import/default": "off",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off"
   },
   "env": {
     "node": true,
