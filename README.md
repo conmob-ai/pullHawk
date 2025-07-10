@@ -84,7 +84,7 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - uses: conmob-ai/pullhawk@v1.0.6
+      - uses: conmob-ai/pullhawk@v1.0.7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -234,35 +234,50 @@ Our GitHub Actions workflow automatically:
 
 ### 🚀 Creating a Release
 
+pullHawk uses **fully automated releases** - just create a git tag and
+everything else happens automatically!
+
 #### For Maintainers:
 
-1. **Prepare the release:**
+1. **Prepare your changes:**
 
    ```bash
-   # Ensure all changes are committed and pushed
+   # Ensure all changes are committed and pushed to main
    git checkout main
    git pull origin main
 
-   # Update version if needed (optional, can be any semantic version)
-   npm version patch  # or minor, major
+   # Verify everything builds and tests pass
+   npm run all
    ```
 
 2. **Create and push a version tag:**
 
    ```bash
-   # Create a new version tag
+   # Create a new version tag (use semantic versioning)
    git tag -a v1.2.3 -m "Release v1.2.3: Add feature XYZ"
 
-   # Push the tag to trigger the release workflow
+   # Push the tag to trigger the automated release workflow
    git push origin v1.2.3
    ```
 
-3. **The automation handles the rest:**
-   - ✅ Runs all tests and builds
-   - ✅ Creates GitHub release with auto-generated changelog
-   - ✅ Uploads packaged artifacts (ZIP file)
-   - ✅ Updates major version tag (e.g., `v1` → latest `v1.x.x`)
-   - ✅ Updates README examples with new version
+3. **The automation handles everything:**
+   - ✅ **Builds fresh code**: Compiles TypeScript and bundles with ncc
+   - ✅ **Auto-syncs versions**: Updates `package.json` version to match git tag
+   - ✅ **Commits built files**: Commits updated `dist/` and `package.json` back
+     to repo
+   - ✅ **Creates GitHub release**: With auto-generated changelog and ZIP
+     artifacts
+   - ✅ **Updates major version tag**: (e.g., `v1` → latest `v1.x.x`)
+   - ✅ **Updates documentation**: README examples automatically use new version
+
+#### ⚠️ Important Notes:
+
+- **No manual `package.json` updates needed** - The workflow automatically syncs
+  versions
+- **No manual `dist/` builds required** - Fresh builds happen during release
+- **Git tags must follow semantic versioning** - Use `v1.2.3` format (with 'v'
+  prefix)
+- **Each tag creates a permanent release** - Choose version numbers carefully
 
 #### Release Artifacts:
 
@@ -276,11 +291,20 @@ Each release includes:
 
 ### 🎯 Version Management
 
-pullHawk follows **semantic versioning** (SemVer):
+pullHawk follows **semantic versioning** (SemVer) with **automatic
+synchronization**:
 
-- **Major** (v2.0.0): Breaking changes
+- **Major** (v2.0.0): Breaking changes to API or behavior
 - **Minor** (v1.1.0): New features, backward compatible
 - **Patch** (v1.0.1): Bug fixes, backward compatible
+
+#### ✨ Automatic Version Sync:
+
+When you create a git tag like `v1.2.3`, the workflow automatically:
+
+1. Updates `package.json` version to `"1.2.3"` (removes 'v' prefix)
+2. Commits the updated `package.json` back to the repository
+3. Ensures git tags and package.json versions always match
 
 #### Using Different Versions:
 
@@ -289,13 +313,28 @@ pullHawk follows **semantic versioning** (SemVer):
 - uses: conmob-ai/pullhawk@v1
 
 # Specific version (pinned, won't auto-update)
-- uses: conmob-ai/pullhawk@v1.0.6
+- uses: conmob-ai/pullhawk@v1.0.7
+
+# Latest release (always points to most recent release)
+- uses: conmob-ai/pullhawk@latest
 
 # Development: Use specific commit (for testing unreleased features)
 - uses: conmob-ai/pullhawk@abc123def456
+```
 
-# Latest release (not recommended for production)
-- uses: conmob-ai/pullhawk@v1.0.6
+#### 🔄 Version Lifecycle:
+
+```bash
+# Developer workflow:
+git tag v1.2.3           # Create tag
+git push origin v1.2.3   # Trigger automation
+
+# Automatic workflow:
+# → Builds fresh dist/ files
+# → Updates package.json to "1.2.3"
+# → Commits changes back to repo
+# → Creates GitHub release
+# → Updates major version tag v1
 ```
 
 ### 🛠️ Manual Development Build
@@ -350,6 +389,38 @@ git ls-remote --tags origin
 # Verify the built files are committed
 git status
 git diff HEAD -- dist/ lib/
+```
+
+### 🚨 Troubleshooting Releases
+
+**Common release issues:**
+
+- **Workflow permission denied**: Ensure `GITHUB_TOKEN` has `contents: write`
+  permissions
+- **Version mismatch after release**: Check if the workflow committed the
+  updated `package.json`
+- **Tag not triggering release**: Verify tag format is `v1.2.3` (with 'v'
+  prefix)
+- **Build failures during release**: Run `npm run all` locally first to catch
+  issues
+
+**Debug release workflow:**
+
+```bash
+# Check if tag was created properly
+git tag -l "v*" | sort -V | tail -5
+
+# Verify workflow ran for your tag
+# Go to: https://github.com/your-org/pullHawk/actions
+
+# Check if package.json was updated
+git show HEAD:package.json | grep version
+
+# Force re-run a failed release
+git tag -d v1.2.3                    # Delete locally
+git push origin :refs/tags/v1.2.3    # Delete remotely
+git tag -a v1.2.3 -m "Re-run release"
+git push origin v1.2.3               # Re-trigger workflow
 ```
 
 ## 🙋 FAQ
