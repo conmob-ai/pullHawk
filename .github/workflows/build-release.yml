@@ -97,19 +97,30 @@ jobs:
       - name: Build and package
         run: npm run all
 
+      - name: Update package.json version
+        run: |
+          # Extract version from tag (remove 'v' prefix)
+          VERSION=${{ github.ref_name }}
+          VERSION_NUMBER=${VERSION#v}
+
+          # Update package.json version
+          npm version $VERSION_NUMBER --no-git-tag-version
+
+          echo "Updated package.json version to $VERSION_NUMBER"
+
       - name: Commit updated dist files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Add the built files
-          git add dist/
+          # Add the built files and updated package.json
+          git add dist/ package.json
 
           # Check if there are changes to commit
           if git diff --staged --quiet; then
-            echo "No changes to dist/ files"
+            echo "No changes to dist/ files or package.json"
           else
-            git commit -m "build: update dist for ${{ github.ref_name }}"
+            git commit -m "build: update dist and version for ${{ github.ref_name }}"
             # Force push the tag to include the new commit
             git tag -f ${{ github.ref_name }}
             git push origin HEAD:main
