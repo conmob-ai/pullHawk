@@ -84,7 +84,7 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - uses: conmob-ai/pullhawk@v1.0.7
+      - uses: conmob-ai/pullhawk@v1.0.8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -313,10 +313,10 @@ When you create a git tag like `v1.2.3`, the workflow automatically:
 - uses: conmob-ai/pullhawk@v1
 
 # Specific version (pinned, won't auto-update)
-- uses: conmob-ai/pullhawk@v1.0.7
+- uses: conmob-ai/pullhawk@v1.0.8
 
 # Latest release (always points to most recent release)
-- uses: conmob-ai/pullhawk@latest
+- uses: conmob-ai/pullhawk@v1.0.8
 
 # Development: Use specific commit (for testing unreleased features)
 - uses: conmob-ai/pullhawk@abc123def456
