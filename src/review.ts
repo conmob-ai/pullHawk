@@ -430,7 +430,7 @@ ${filename}: ${summary}
     if (releaseNotesResponse === '') {
       info('release notes: nothing obtained from openai')
     } else {
-      let message = '### Summary by as seen by pullHawk\n\n'
+      let message = '### Summary by as seen by 🦅 pullHawk\n\n'
       message += releaseNotesResponse
       try {
         await commenter.updateDescription(
