@@ -83,6 +83,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -95,6 +96,25 @@ jobs:
 
       - name: Build and package
         run: npm run all
+
+      - name: Commit updated dist files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Add the built files
+          git add dist/
+
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to dist/ files"
+          else
+            git commit -m "build: update dist for ${{ github.ref_name }}"
+            # Force push the tag to include the new commit
+            git tag -f ${{ github.ref_name }}
+            git push origin HEAD:main
+            git push origin ${{ github.ref_name }} --force
+          fi
 
       - name: Get version from tag
         id: get_version

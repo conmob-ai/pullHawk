@@ -197,7 +197,7 @@ security-conscious analysis_
 
 ### Development Setup
 
-Requirements: Node.js 17+
+Requirements: Node.js 20+
 
 ```bash
 # Install dependencies
