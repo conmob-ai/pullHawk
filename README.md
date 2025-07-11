@@ -7,7 +7,7 @@ alexander.stiefel@t-systems.com)
 
 pullHawk is an AI-powered code reviewer and summarizer for GitHub pull requests,
 designed specifically for teams who need **private, secure, and self-hosted LLM
-solutions**. Born from the foundation of [CodeRabbit](http://coderabbit.ai),
+solutions**. Born from the foundation of [CodeRabbits AI PR Reviewer](https://github.com/coderabbitai/ai-pr-reviewer),
 pullHawk addresses the critical need for organizations that cannot send their
 proprietary code to external AI services.
 
