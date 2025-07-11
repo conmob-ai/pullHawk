@@ -35,6 +35,12 @@ async function run(): Promise<void> {
   // print options
   options.print()
 
+  // In test mode, just print options and exit successfully
+  if (process.env.NODE_ENV === 'test') {
+    console.log('Test mode: skipping bot creation and review process')
+    return
+  }
+
   const prompts: Prompts = new Prompts(
     getInput('summarize'),
     getInput('summarize_release_notes')
