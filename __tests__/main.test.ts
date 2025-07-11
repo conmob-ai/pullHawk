@@ -4,6 +4,9 @@ import * as path from 'path'
 import * as process from 'process'
 
 test('test runs', () => {
+  // Add test mode
+  process.env['NODE_ENV'] = 'test'
+
   // Set required environment variables for GitHub Actions simulation
   process.env['INPUT_ACTION'] = 'code-review'
   process.env['INPUT_DEBUG'] = 'false' // Valid YAML boolean
@@ -30,7 +33,11 @@ test('test runs', () => {
   const np = process.execPath
   const ip = path.join(__dirname, '..', 'lib', 'main.js')
   const options: cp.ExecFileSyncOptions = {
-    env: process.env
+    env: {
+      ...process.env,
+      NODE_ENV: 'test',
+      OPENAI_API_KEY: 'fake-openai-key-for-testing'
+    }
   }
   console.log(cp.execFileSync(np, [ip], options).toString())
 })
