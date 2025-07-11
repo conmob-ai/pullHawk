@@ -2,6 +2,7 @@ import {
   getBooleanInput,
   getInput,
   getMultilineInput,
+  info,
   setFailed,
   warning
 } from '@actions/core'
@@ -37,7 +38,7 @@ async function run(): Promise<void> {
 
   // In test mode, just print options and exit successfully
   if (process.env.NODE_ENV === 'test') {
-    console.log('Test mode: skipping bot creation and review process')
+    info('Test mode: skipping bot creation and review process')
     return
   }
 
